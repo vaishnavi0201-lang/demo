@@ -5,541 +5,389 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>BusBooker - Modern Bus Booking</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
-        rel="stylesheet" />
-    <!-- Material Symbols -->
+    <title>3D Face Mapping Enrollment</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <!-- Tailwind Config -->
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#259df4",
-                        "background-light": "#f5f7f8",
-                        "background-dark": "#101a22", // Deep Navy
+                        "primary": "#42f20d",
+                        "background-light": "#f6f8f5",
+                        "background-dark": "#142210",
+                        "surface-dark": "#1a2c1e",
+                        "surface-light": "#ffffff"
                     },
                     fontFamily: {
-                        "display": ["Inter", "sans-serif"]
+                        "display": ["Manrope", "sans-serif"]
                     },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "2xl": "1rem",
-                        "full": "9999px"
-                    },
-                    backgroundImage: {
-                        'hero-pattern': "linear-gradient(rgba(16, 26, 34, 0.4) 0%, rgba(16, 26, 34, 0.8) 100%)",
-                    }
+                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
                 },
             },
         }
     </script>
     <style>
-        /* Custom Glassmorphism styles */
+        /* Custom scanning animation */
+        @keyframes scan {
+            0% {
+                top: 0%;
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                top: 100%;
+                opacity: 0;
+            }
+        }
+
+        .animate-scan {
+            animation: scan 3s linear infinite;
+        }
+
+        /* Grid background pattern */
+        .grid-bg {
+            background-image: linear-gradient(rgba(66, 242, 13, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(66, 242, 13, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Glassmorphism utility */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-        }
-
-        /* Custom Input styles for transparency */
-        .glass-input {
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .glass-input:focus {
-            background: rgba(0, 0, 0, 0.4);
-            border-color: #259df4;
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(37, 157, 244, 0.2);
-        }
-
-        /* Hide scrollbar for horizontal scroll */
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+            background: rgba(20, 34, 16, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(66, 242, 13, 0.1);
         }
     </style>
 </head>
 
 <body
-    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-x-hidden antialiased">
-    <div class="relative flex min-h-screen w-full flex-col">
-        <!-- Navbar -->
-        <header
-            class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-gradient-to-b from-background-dark/90 to-transparent">
-            <div class="layout-container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div class="flex items-center justify-between py-5">
-                    <!-- Logo -->
-                    <div class="flex items-center gap-3 text-white">
-                        <div class="flex items-center justify-center size-10 rounded-xl bg-primary/20 text-primary">
-                            <span class="material-symbols-outlined" style="font-size: 24px;">directions_bus</span>
+    class="bg-background-light dark:bg-background-dark font-display text-gray-900 dark:text-white min-h-screen flex flex-col overflow-hidden">
+
+    <!-- Injected Home Button -->
+    <a href="../index.html"
+        style="position: fixed; top: 20px; left: 20px; z-index: 9999; background: #111827; color: white; padding: 10px 20px; border-radius: 999px; text-decoration: none; font-family: sans-serif; font-weight: 600; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 8px; transition: all 0.2s;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        <span>Dashboard</span>
+    </a>
+    <script>
+        // Simple hover effect
+        document.currentScript.previousElementSibling.addEventListener('mouseenter', e => {
+            e.target.style.transform = 'translateY(-2px)';
+            e.target.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.5)';
+        });
+        document.currentScript.previousElementSibling.addEventListener('mouseleave', e => {
+            e.target.style.transform = 'translateY(0)';
+            e.target.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+        });
+    </script>
+
+
+    <!-- Top Navigation -->
+    <header
+        class="w-full z-20 border-b border-gray-200 dark:border-[#2c3928] bg-surface-light/80 dark:bg-[#121811]/90 backdrop-blur-md px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <div class="size-8 text-primary flex items-center justify-center">
+                <span class="material-symbols-outlined text-3xl">face</span>
+            </div>
+            <div>
+                <h2 class="text-sm font-bold uppercase tracking-widest text-gray-900 dark:text-white">Aura Biometrics
+                </h2>
+                <div class="flex items-center gap-2">
+                    <span class="size-1.5 rounded-full bg-primary animate-pulse"></span>
+                    <span class="text-xs text-gray-500 dark:text-gray-400 font-medium tracking-wide">SYSTEM ACTIVE //
+                        SECURE CONNECTION</span>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center gap-6">
+            <div
+                class="hidden md:flex items-center gap-3 px-4 py-2 rounded-full bg-gray-100 dark:bg-[#1e2a1b] border border-gray-200 dark:border-[#2c3928]">
+                <div class="size-6 rounded-full bg-gray-300 dark:bg-gray-700 bg-center bg-cover"
+                    data-alt="User avatar small"
+                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDTKpEgKtRIQa-H0-hAC_j_eYnPPwjWapUjKDI134KHv4Kgp7rxZOMZyU3qEkmzku2fvpAJYluj_UM4BrZWGR9csavCQhRV5Zba-hOw7k6uTjbIcz7Cqm7X2YAVbd3xilnZ8TZy8bI0cFZCPHpl-fJA5-Jy-e-1juVN3GNfWE9Ot12rnhtH6q_u4a1Nnn0HWfBUejtgHi12UsTOAhvX4c-hZ2NNQ6KUdl1K_UHpu3jZ0-a5wmeCxr53TAuJdHNr6WsVOQy5lcF68cA");'>
+                </div>
+                <span class="text-sm font-semibold pr-2">A. Smith</span>
+            </div>
+            <button class="text-gray-500 hover:text-primary transition-colors">
+                <span class="material-symbols-outlined">settings</span>
+            </button>
+            <button class="text-gray-500 hover:text-red-500 transition-colors">
+                <span class="material-symbols-outlined">logout</span>
+            </button>
+        </div>
+    </header>
+    <!-- Main Split Screen Content -->
+    <main class="flex-1 flex flex-col lg:flex-row h-[calc(100vh-80px)] overflow-hidden">
+        <!-- Left Panel: 3D Visualization -->
+        <div
+            class="relative w-full lg:w-3/5 h-[50vh] lg:h-full bg-black flex flex-col items-center justify-center overflow-hidden group">
+            <!-- Background Grid -->
+            <div class="absolute inset-0 grid-bg opacity-30 pointer-events-none"></div>
+            <!-- Vignette -->
+            <div class="absolute inset-0 bg-radial-gradient from-transparent to-black pointer-events-none"></div>
+            <!-- 3D Mesh Container -->
+            <div class="relative z-10 w-full max-w-2xl aspect-square flex items-center justify-center">
+                <!-- Decorative rotating rings -->
+                <div
+                    class="absolute inset-0 border border-primary/20 rounded-full scale-75 animate-[spin_10s_linear_infinite]">
+                </div>
+                <div
+                    class="absolute inset-0 border border-dashed border-primary/10 rounded-full scale-90 animate-[spin_15s_linear_reverse_infinite]">
+                </div>
+                <!-- Main Face Graphic -->
+                <div class="relative w-[300px] h-[400px] md:w-[400px] md:h-[500px]">
+                    <!-- This image represents the wireframe mesh -->
+                    <img alt="Abstract digital wireframe face visualization in dark mode"
+                        class="w-full h-full object-cover opacity-60 mix-blend-luminosity brightness-75 contrast-125"
+                        data-alt="Abstract 3D wireframe mesh of a human head for biometric scanning"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcbNt4s9aEsC2yCbbpf3B0bIEUbXDUruV3PE7mYEvSKnMKhF4dt6CYFQ9iK0clERDtQjywW1WharUGUo2xz5gXyPxM4r8h_QXRGeZx6Si59GKTXvsUhgusoV4nSw7mlx1kjTTHXMT5AJeRQgHowJT1Z2_Q01iPByoGWgDG5oez8qm2cBT96HECpEgoZeriFHTc81T4guiGifiIjrwsgunpPrIr5Dsuj2Rw5t1T8wdW144k51ct5fDiuq3qg3iaZATiMe4k8N10BRQ" />
+                    <!-- Scanning Line -->
+                    <div
+                        class="absolute left-0 right-0 h-1 bg-primary shadow-[0_0_20px_rgba(66,242,13,0.8)] animate-scan z-20">
+                    </div>
+                    <!-- Overlay Graphics -->
+                    <div class="absolute top-1/4 left-1/4 size-3 bg-primary rounded-full shadow-[0_0_10px_#42f20d]">
+                    </div>
+                    <div class="absolute bottom-1/3 right-1/4 size-2 bg-primary/50 rounded-full"></div>
+                    <div class="absolute top-1/2 left-10 text-[10px] text-primary font-mono opacity-70">Z: 12.04</div>
+                    <div class="absolute bottom-20 right-10 text-[10px] text-primary font-mono opacity-70">X: 44.91
+                    </div>
+                    <!-- Face Bonding Box Corners -->
+                    <div class="absolute top-0 left-0 w-16 h-16 border-l-2 border-t-2 border-primary"></div>
+                    <div class="absolute top-0 right-0 w-16 h-16 border-r-2 border-t-2 border-primary"></div>
+                    <div class="absolute bottom-0 left-0 w-16 h-16 border-l-2 border-b-2 border-primary"></div>
+                    <div class="absolute bottom-0 right-0 w-16 h-16 border-r-2 border-b-2 border-primary"></div>
+                </div>
+            </div>
+            <!-- Live Stats Overlay -->
+            <div class="absolute bottom-8 left-8 right-8 flex justify-between items-end">
+                <div class="font-mono text-xs text-primary/80 space-y-1">
+                    <p>NODAL_POINTS: <span class="text-white font-bold">1,402</span></p>
+                    <p>DEPTH_MAP: <span class="text-white font-bold">ACTIVE</span></p>
+                    <p>MESH_INTEGRITY: <span class="text-white font-bold">98.4%</span></p>
+                </div>
+                <div class="flex gap-4">
+                    <div class="glass-panel px-4 py-2 rounded-lg flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary text-xl">light_mode</span>
+                        <div>
+                            <p class="text-xs text-gray-400 uppercase">Lighting</p>
+                            <p class="text-sm text-white font-medium">Optimal</p>
                         </div>
-                        <h2 class="text-white text-xl font-bold tracking-tight">BusBooker</h2>
                     </div>
-                    <!-- Navigation -->
-                    <div class="hidden md:flex items-center gap-8">
-                        <a class="text-white/80 hover:text-white text-sm font-medium transition-colors"
-                            href="index.html">Home</a>
-                        <a class="text-white/80 hover:text-white text-sm font-medium transition-colors"
-                            href="../bus_search_results_page/index.html">Routes</a>
-                        <a class="text-white/80 hover:text-white text-sm font-medium transition-colors" href="#">Manage
-                            Booking</a>
-                    </div>
-                    <!-- Actions -->
-                    <div class="flex items-center gap-4">
-                        <button
-                            class="hidden sm:flex items-center gap-2 text-white/80 hover:text-white text-sm font-medium">
-                            <span class="material-symbols-outlined" style="font-size: 20px;">language</span>
-                            <span>USD</span>
-                        </button>
-                        <button
-                            class="flex items-center justify-center rounded-lg h-10 px-6 bg-white/10 hover:bg-white/20 text-white text-sm font-bold backdrop-blur-sm transition-all border border-white/10">
-                            Sign In
-                        </button>
+                    <div class="glass-panel px-4 py-2 rounded-lg flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary text-xl">straighten</span>
+                        <div>
+                            <p class="text-xs text-gray-400 uppercase">Distance</p>
+                            <p class="text-sm text-white font-medium">60cm</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </header>
-        <!-- Hero Section -->
-        <main class="relative flex-1 flex flex-col justify-center items-center min-h-[90vh]">
-            <!-- Background Image/Video Placeholder -->
-            <div class="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat bg-hero-pattern"
-                data-alt="Scenic highway at sunset with mountains in the distance"
-                style='background-image: linear-gradient(rgba(16, 26, 34, 0.3) 0%, rgba(16, 26, 34, 0.9) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuCkR2FZTxqkGHXr4YF7FEqkv2GaCH31ZONMtNtpPtCWq8d5ckbWmIC6xIMP0DpZFC8pceu7h8MZkgvLXxRPioei9e9I0tUssGbdI5ZfJUt325cr0YWdltYyHLD_cr3xK_u-_B8-L8Bjb1qp0ohQRZZr924fC1sZjq_sIFoL0U0Rtt24LUWHYq_YpA-hPFkDTN66TRcQWsXVgtlMyeePOWdDcp46A20BXGWAfZBeJ4jsaPG2_mAsry9Wz_HCk0zVDMccMIWZSUg3wH8A");'>
-            </div>
-            <div class="relative z-10 w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col items-center pt-20">
-                <!-- Hero Text -->
-                <div class="text-center max-w-3xl mb-12 animate-fade-in-up">
-                    <h1
-                        class="text-white text-5xl sm:text-6xl md:text-7xl font-black leading-tight tracking-tight mb-4 drop-shadow-xl">
-                        Journey Comfortably <br /> <span
-                            class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-200">Across the
-                            Country.</span>
+        </div>
+        <!-- Right Panel: Controls & Progress -->
+        <div
+            class="w-full lg:w-2/5 h-[50vh] lg:h-full bg-background-light dark:bg-surface-dark border-l border-gray-200 dark:border-[#2c3928] overflow-y-auto">
+            <div class="h-full flex flex-col px-8 py-10 max-w-lg mx-auto lg:max-w-none">
+                <!-- Header Section -->
+                <div class="mb-10">
+                    <h1 class="text-3xl lg:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-2">
+                        Face Mapping
                     </h1>
-                    <p class="text-blue-100/80 text-lg sm:text-xl font-medium max-w-xl mx-auto drop-shadow-md">
-                        Experience scenic rides with premium comfort. Book your seat today.
+                    <p class="text-gray-500 dark:text-gray-400">
+                        Complete the 3-step biometric registration process to secure your profile.
                     </p>
                 </div>
-                <!-- Glassmorphism Search Widget -->
-                <div class="w-full max-w-5xl glass-panel rounded-2xl p-2 sm:p-4 mb-16 shadow-2xl">
-                    <div class="flex flex-col lg:flex-row gap-4 lg:gap-2 items-center">
-                        <!-- From Input -->
-                        <div class="relative w-full flex-1 group">
-                            <div class="absolute left-4 top-1/2 -translate-y-1/2 text-primary pointer-events-none">
-                                <span class="material-symbols-outlined">trip_origin</span>
-                            </div>
-                            <div
-                                class="absolute left-12 top-2 text-xs text-blue-200/60 font-medium pointer-events-none">
-                                From</div>
-                            <input
-                                class="glass-input w-full h-[72px] rounded-xl pl-12 pt-5 pb-1 text-white placeholder-white/30 text-lg font-medium"
-                                placeholder="Origin City" type="text" value="New York, NY" />
-                        </div>
-                        <!-- Switch Button (Visual only for layout) -->
-                        <button
-                            class="hidden lg:flex size-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-primary hover:text-white transition-all -ml-6 -mr-6 z-10 border border-white/10 backdrop-blur-md">
-                            <span class="material-symbols-outlined">sync_alt</span>
-                        </button>
-                        <!-- To Input -->
-                        <div class="relative w-full flex-1">
-                            <div class="absolute left-4 top-1/2 -translate-y-1/2 text-primary pointer-events-none">
-                                <span class="material-symbols-outlined">location_on</span>
-                            </div>
-                            <div
-                                class="absolute left-12 top-2 text-xs text-blue-200/60 font-medium pointer-events-none">
-                                To</div>
-                            <input
-                                class="glass-input w-full h-[72px] rounded-xl pl-12 pt-5 pb-1 text-white placeholder-white/30 text-lg font-medium"
-                                placeholder="Destination City" type="text" value="Boston, MA" />
-                        </div>
-                        <!-- Date Input -->
-                        <div class="relative w-full lg:w-[220px]">
-                            <div class="absolute left-4 top-1/2 -translate-y-1/2 text-primary pointer-events-none">
-                                <span class="material-symbols-outlined">calendar_month</span>
-                            </div>
-                            <div
-                                class="absolute left-12 top-2 text-xs text-blue-200/60 font-medium pointer-events-none">
-                                Departure</div>
-                            <input
-                                class="glass-input w-full h-[72px] rounded-xl pl-12 pt-5 pb-1 text-white placeholder-white/30 text-lg font-medium cursor-pointer"
-                                placeholder="Select Date" type="text" value="Fri, Oct 24" />
-                        </div>
-                        <!-- Passenger Input -->
-                        <div class="relative w-full lg:w-[180px]">
-                            <div class="absolute left-4 top-1/2 -translate-y-1/2 text-primary pointer-events-none">
-                                <span class="material-symbols-outlined">person</span>
-                            </div>
-                            <div
-                                class="absolute left-12 top-2 text-xs text-blue-200/60 font-medium pointer-events-none">
-                                Passengers</div>
-                            <select
-                                class="glass-input w-full h-[72px] rounded-xl pl-12 pt-5 pb-1 text-white text-lg font-medium appearance-none cursor-pointer">
-                                <option class="bg-slate-800">1 Passenger</option>
-                                <option class="bg-slate-800">2 Passengers</option>
-                                <option class="bg-slate-800">3 Passengers</option>
-                            </select>
-                            <div class="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 pointer-events-none">
-                                <span class="material-symbols-outlined">expand_more</span>
-                            </div>
-                        </div>
-                        <!-- Search Button -->
-                        <a href="../bus_search_results_page/index.html"
-                            class="w-full lg:w-auto h-[72px] px-8 rounded-xl bg-primary hover:bg-blue-500 text-white font-bold text-lg shadow-lg shadow-primary/30 transition-all flex items-center justify-center gap-2">
-                            <span class="material-symbols-outlined">search</span>
-                            <span>Find Tickets</span>
-                        </a>
-                    </div>
-                </div>
-                <!-- Features Strip -->
-                <div class="flex flex-wrap justify-center gap-6 sm:gap-12 text-white/70">
-                    <div class="flex items-center gap-2">
-                        <span class="material-symbols-outlined text-primary">wifi</span>
-                        <span class="text-sm font-medium">Free Wi-Fi</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="material-symbols-outlined text-primary">chair</span>
-                        <span class="text-sm font-medium">Reclining Seats</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="material-symbols-outlined text-primary">power</span>
-                        <span class="text-sm font-medium">Power Outlets</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="material-symbols-outlined text-primary">verified_user</span>
-                        <span class="text-sm font-medium">Safe Travel</span>
-                    </div>
-                </div>
-            </div>
-        </main>
-        <!-- Popular Routes Section -->
-        <section class="py-20 bg-background-dark border-t border-white/5">
-            <div class="layout-container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div class="flex items-end justify-between mb-10">
-                    <div>
-                        <h2 class="text-white text-3xl font-bold tracking-tight mb-2">Trending Destinations</h2>
-                        <p class="text-slate-400">Popular routes travelers are booking right now.</p>
-                    </div>
-                    <div class="hidden sm:flex gap-2">
-                        <button
-                            class="size-10 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-white/5 transition-colors">
-                            <span class="material-symbols-outlined">arrow_back</span>
-                        </button>
-                        <button
-                            class="size-10 rounded-full bg-primary flex items-center justify-center text-white hover:bg-blue-600 transition-colors shadow-lg shadow-primary/20">
-                            <span class="material-symbols-outlined">arrow_forward</span>
-                        </button>
-                    </div>
-                </div>
-                <!-- Travel Cards Container -->
-                <div class="flex gap-6 overflow-x-auto hide-scrollbar pb-8 snap-x">
-                    <!-- Card 1 -->
-                    <div class="flex-none w-[280px] sm:w-[320px] snap-center group cursor-pointer">
+                <!-- Progress Steps -->
+                <div class="flex-1 flex flex-col gap-8 relative">
+                    <!-- Vertical Line connecting steps -->
+                    <div class="absolute left-[19px] top-4 bottom-4 w-0.5 bg-gray-200 dark:bg-gray-700 z-0"></div>
+                    <!-- Step 1: Active -->
+                    <div class="relative z-10 flex gap-5 group">
                         <div
-                            class="relative h-[420px] rounded-2xl overflow-hidden shadow-xl transition-all duration-300 group-hover:shadow-primary/20 group-hover:-translate-y-2">
-                            <!-- Background Image -->
-                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                                data-alt="Eiffel Tower view from a street in Paris" data-location="Paris"
-                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD1uv_e3Ycqx-NFYJW8ns7_CgC7d5QnqO1MffOp2oQcpAEcoE011sZV_NYbW309UxCn95m2r6DJhQReLmTpnRnPTojq9kR6w756Slh4mNELb5QcbAvdQ7NPQimh0wIGCkY46jIWcwXG0ce21IFmHllRI62aojVeaVtHiz-RY4QHlT1ZdAYtwNP4ty2ezI5W7m0sFS48NB4e8LdoR4gGAQPzoFSE3xa5vqkpPW4EsJiM7bfRfAoFMOKn47EfVCPprdYPdL9WV0HuOSb6");'>
+                            class="flex-shrink-0 size-10 rounded-full bg-primary flex items-center justify-center ring-4 ring-primary/20">
+                            <span class="material-symbols-outlined text-black font-bold">looks_one</span>
+                        </div>
+                        <div class="flex-1 pb-2">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">Frontal Scan</h3>
+                                <span
+                                    class="bg-primary/20 text-primary-dark dark:text-primary text-xs px-2 py-0.5 rounded font-bold uppercase tracking-wider">In
+                                    Progress</span>
                             </div>
-                            <!-- Gradient Overlay -->
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent">
-                            </div>
-                            <!-- Content -->
-                            <div class="absolute inset-0 p-6 flex flex-col justify-end">
-                                <div
-                                    class="bg-primary/90 backdrop-blur-sm self-start px-3 py-1 rounded-full text-xs font-bold text-white mb-3">
-                                    From $25
+                            <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                                Align your face within the frame and look directly at the camera. Hold still for 3
+                                seconds.
+                            </p>
+                            <!-- Mini visualization for instructions -->
+                            <div
+                                class="p-4 bg-gray-100 dark:bg-black/30 rounded-xl border border-dashed border-gray-300 dark:border-gray-600 flex gap-4 items-center mb-4">
+                                <span
+                                    class="material-symbols-outlined text-3xl text-gray-400">center_focus_strong</span>
+                                <div class="flex flex-col gap-1 w-full">
+                                    <div
+                                        class="flex justify-between text-xs font-medium text-gray-500 dark:text-gray-400">
+                                        <span>Capturing mesh...</span>
+                                        <span>33%</span>
+                                    </div>
+                                    <div class="h-1.5 w-full bg-gray-300 dark:bg-gray-700 rounded-full overflow-hidden">
+                                        <div class="h-full bg-primary w-1/3"></div>
+                                    </div>
                                 </div>
-                                <h3 class="text-white text-2xl font-bold leading-tight mb-1">London <span
-                                        class="text-white/60 mx-1">→</span> Paris</h3>
-                                <p class="text-slate-300 text-sm mb-4">Daily departures • 6h 30m</p>
-                                <button
-                                    class="w-full py-3 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm backdrop-blur-md transition-colors">
-                                    Book Now
-                                </button>
                             </div>
-                        </div>
-                    </div>
-                    <!-- Card 2 -->
-                    <div class="flex-none w-[280px] sm:w-[320px] snap-center group cursor-pointer">
-                        <div
-                            class="relative h-[420px] rounded-2xl overflow-hidden shadow-xl transition-all duration-300 group-hover:shadow-primary/20 group-hover:-translate-y-2">
-                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                                data-alt="Times Square neon lights in New York City" data-location="New York"
-                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAdvexzNkmEIhv8r6y75dNasSW3fAYK6Ei_jQGSbsXGlWpmkSVkq5wjbB3eFANBeSudc2kfMOZb2uQveMfFIbK7vpIzmZjoAq2Zj_E7FTyubeoHyZvuRBRMzZswWCm_kq-DYM4pPMZT7HEp4KvG2yTE5oLL86iCIP3lW9DKPr_MrByymuDf6s6qYsRzOscOj_EapDS6Vokk7FbgNUYGvP32KIwqzr5sPYQwBjoLILp05pfQr4qeVZG7dQVeJdHg6KfeD4E9fz3Z9w9L");'>
-                            </div>
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent">
-                            </div>
-                            <div class="absolute inset-0 p-6 flex flex-col justify-end">
-                                <div
-                                    class="bg-primary/90 backdrop-blur-sm self-start px-3 py-1 rounded-full text-xs font-bold text-white mb-3">
-                                    From $18
-                                </div>
-                                <h3 class="text-white text-2xl font-bold leading-tight mb-1">Boston <span
-                                        class="text-white/60 mx-1">→</span> NYC</h3>
-                                <p class="text-slate-300 text-sm mb-4">Hourly shuttles • 4h 15m</p>
-                                <button
-                                    class="w-full py-3 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm backdrop-blur-md transition-colors">
-                                    Book Now
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Card 3 -->
-                    <div class="flex-none w-[280px] sm:w-[320px] snap-center group cursor-pointer">
-                        <div
-                            class="relative h-[420px] rounded-2xl overflow-hidden shadow-xl transition-all duration-300 group-hover:shadow-primary/20 group-hover:-translate-y-2">
-                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                                data-alt="Golden Gate Bridge in San Francisco with fog" data-location="San Francisco"
-                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDTEZ3dz6JDcd4_S2s30GFNjF0TqnbWbrDm-qo-Dne6nyXi9NSaKQvfFmcVHIf2QuWBlkbuyO8cmB1atIuzmJCt7LZoqxJXExgfHKnxHEnziDhEg1X_p8MjNBxgeEjKShCNYnTaAiRQ_oqljgYpd-lS0HogV5Hg0wD-QE6RKYFGE3GQR8nGZKvBVw4dMQSFhAU4TcX52k8583t3J9Hx6t1pfIqynkH4KPGKMUpyZNYHY-12KkEJ70yAgqn2ddcrVTMmAgoh6dv85nkp");'>
-                            </div>
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent">
-                            </div>
-                            <div class="absolute inset-0 p-6 flex flex-col justify-end">
-                                <div
-                                    class="bg-primary/90 backdrop-blur-sm self-start px-3 py-1 rounded-full text-xs font-bold text-white mb-3">
-                                    From $35
-                                </div>
-                                <h3 class="text-white text-2xl font-bold leading-tight mb-1">LA <span
-                                        class="text-white/60 mx-1">→</span> San Francisco</h3>
-                                <p class="text-slate-300 text-sm mb-4">Scenic coastal route • 7h 00m</p>
-                                <button
-                                    class="w-full py-3 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm backdrop-blur-md transition-colors">
-                                    Book Now
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Card 4 -->
-                    <div class="flex-none w-[280px] sm:w-[320px] snap-center group cursor-pointer">
-                        <div
-                            class="relative h-[420px] rounded-2xl overflow-hidden shadow-xl transition-all duration-300 group-hover:shadow-primary/20 group-hover:-translate-y-2">
-                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                                data-alt="Chicago skyline with river in foreground" data-location="Chicago"
-                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBj8ivtkvWnrGdA-FLyhxR4vjpWd-sjHSlzLgYbIbR5v1Vq-Qo6-ku64DXnUuNhya2BzGqbOh7JhIlWVfM4VEkHgyo2lhecBXdcZz2WMgIO-aKXbyY62ATbB0FRwIjXKXr6kGZIJBMstAOwBsQ06jq2fmx6RR80KvzCtJ7Q8iQwnkg69HIIWB6KXZ2QHxZpmM7w5-VfNgiLDvfT0Iw_02mta2aYeIY0yTC96oBNRV2gZjJ3EVfr9I07WYcdpTbARpMJfb_ZeQ5xG_9s");'>
-                            </div>
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent">
-                            </div>
-                            <div class="absolute inset-0 p-6 flex flex-col justify-end">
-                                <div
-                                    class="bg-primary/90 backdrop-blur-sm self-start px-3 py-1 rounded-full text-xs font-bold text-white mb-3">
-                                    From $22
-                                </div>
-                                <h3 class="text-white text-2xl font-bold leading-tight mb-1">Detroit <span
-                                        class="text-white/60 mx-1">→</span> Chicago</h3>
-                                <p class="text-slate-300 text-sm mb-4">Express service • 4h 45m</p>
-                                <button
-                                    class="w-full py-3 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm backdrop-blur-md transition-colors">
-                                    Book Now
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Newsletter Section -->
-        <section class="py-20 bg-[#0d141a]">
-            <div class="layout-container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div
-                    class="rounded-3xl bg-gradient-to-r from-primary/10 to-transparent border border-white/5 p-8 md:p-12 relative overflow-hidden">
-                    <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-                        <div class="max-w-xl">
-                            <h2 class="text-white text-3xl font-bold mb-3">Get Weekly Travel Inspiration</h2>
-                            <p class="text-slate-400">Join 500,000+ travelers. Receive exclusive deals and scenic route
-                                updates straight to your inbox.</p>
-                        </div>
-                        <div class="w-full md:w-auto flex flex-col sm:flex-row gap-3">
-                            <input
-                                class="w-full sm:w-[300px] bg-background-dark border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary"
-                                placeholder="Your email address" type="email" />
                             <button
-                                class="bg-primary hover:bg-blue-500 text-white font-bold py-3 px-6 rounded-xl transition-colors whitespace-nowrap">
-                                Subscribe
+                                class="w-full py-3 bg-primary hover:bg-[#36c90b] text-black font-bold rounded-full transition-all shadow-[0_0_15px_rgba(66,242,13,0.3)] hover:shadow-[0_0_25px_rgba(66,242,13,0.5)] flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined">play_circle</span>
+                                Start Capture
                             </button>
                         </div>
                     </div>
-                    <!-- Decorative Circle -->
-                    <div
-                        class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/3 size-64 rounded-full bg-primary/10 blur-3xl">
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Footer -->
-        <footer class="bg-background-dark pt-16 pb-8 border-t border-white/5">
-            <div class="layout-container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
-                    <div class="col-span-2 lg:col-span-2">
-                        <div class="flex items-center gap-3 text-white mb-6">
-                            <div class="flex items-center justify-center size-8 rounded-lg bg-primary/20 text-primary">
-                                <span class="material-symbols-outlined" style="font-size: 20px;">directions_bus</span>
-                            </div>
-                            <h2 class="text-white text-lg font-bold">BusBooker</h2>
+                    <!-- Step 2: Pending -->
+                    <div class="relative z-10 flex gap-5 opacity-50">
+                        <div
+                            class="flex-shrink-0 size-10 rounded-full bg-gray-200 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">looks_two</span>
                         </div>
-                        <p class="text-slate-500 text-sm max-w-xs mb-6">
-                            Connecting you to thousands of destinations with comfort and style. Your journey begins
-                            here.
-                        </p>
-                        <div class="flex gap-4">
-                            <a class="text-slate-400 hover:text-white transition-colors" href="#">
-                                <span class="material-symbols-outlined">thumb_up</span>
-                            </a>
-                            <a class="text-slate-400 hover:text-white transition-colors" href="#">
-                                <span class="material-symbols-outlined">photo_camera</span>
-                            </a>
-                            <a class="text-slate-400 hover:text-white transition-colors" href="#">
-                                <span class="material-symbols-outlined">mail</span>
-                            </a>
+                        <div class="flex-1 pt-1">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">Profile Scan</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
+                                Slowly turn your head 45° to the left, then to the right to map depth.
+                            </p>
                         </div>
                     </div>
-                    <div>
-                        <h4 class="text-white font-bold mb-4">Company</h4>
-                        <ul class="space-y-3 text-sm text-slate-400">
-                            <li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
-                            <li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
-                            <li><a class="hover:text-primary transition-colors" href="#">Press</a></li>
-                            <li><a class="hover:text-primary transition-colors" href="#">Blog</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="text-white font-bold mb-4">Support</h4>
-                        <ul class="space-y-3 text-sm text-slate-400">
-                            <li><a class="hover:text-primary transition-colors" href="#">Help Center</a></li>
-                            <li><a class="hover:text-primary transition-colors" href="#">Terms of Service</a></li>
-                            <li><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
-                            <li><a class="hover:text-primary transition-colors" href="#">Contact Us</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="text-white font-bold mb-4">Destinations</h4>
-                        <ul class="space-y-3 text-sm text-slate-400">
-                            <li><a class="hover:text-primary transition-colors" href="#">New York</a></li>
-                            <li><a class="hover:text-primary transition-colors" href="#">Los Angeles</a></li>
-                            <li><a class="hover:text-primary transition-colors" href="#">Chicago</a></li>
-                            <li><a class="hover:text-primary transition-colors" href="#">Miami</a></li>
-                        </ul>
+                    <!-- Step 3: Pending -->
+                    <div class="relative z-10 flex gap-5 opacity-50">
+                        <div
+                            class="flex-shrink-0 size-10 rounded-full bg-gray-200 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">looks_3</span>
+                        </div>
+                        <div class="flex-1 pt-1">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">Micro-Expressions</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
+                                Perform a neutral expression followed by a natural smile.
+                            </p>
+                        </div>
                     </div>
                 </div>
-                <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p class="text-slate-600 text-sm">© 2024 BusBooker Inc. All rights reserved.</p>
-                    <div class="flex gap-6 text-slate-500 text-sm">
-                        <a class="hover:text-white" href="#">Privacy</a>
-                        <a class="hover:text-white" href="#">Terms</a>
-                        <a class="hover:text-white" href="#">Sitemap</a>
+                <!-- Footer / Help -->
+                <div class="mt-8 pt-6 border-t border-gray-200 dark:border-[#2c3928]">
+                    <div class="flex items-center gap-3 text-gray-500 dark:text-gray-400 text-sm">
+                        <span class="material-symbols-outlined text-lg">info</span>
+                        <p>Having trouble? Ensure your background is clear.</p>
                     </div>
                 </div>
-            </div>
-        </footer>
-    </div>
-
-    <!-- Consolidated Project Navigation -->
-    <div id="project-nav" class="fixed bottom-6 right-6 z-[9999]">
-        <button id="nav-toggle"
-            class="flex items-center justify-center size-14 rounded-full bg-primary text-white shadow-2xl hover:scale-110 transition-all duration-300 group">
-            <span
-                class="material-symbols-outlined text-3xl group-hover:rotate-90 transition-transform duration-300">apps</span>
-        </button>
-        <div id="nav-menu"
-            class="absolute bottom-20 right-0 w-64 bg-background-dark/95 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl scale-0 origin-bottom-right transition-all duration-300 opacity-0">
-            <h3 class="text-white font-bold mb-4 px-2 text-sm uppercase tracking-wider opacity-50">Project Pages</h3>
-            <div class="space-y-2">
-                <a href="../bus_booking_home_page/index.html"
-                    class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 text-white/70 hover:text-white transition-all">
-                    <span class="material-symbols-outlined text-primary">home</span>
-                    <span class="text-sm font-medium">Home Page</span>
-                </a>
-                <a href="../bus_search_results_page/index.html"
-                    class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 text-white/70 hover:text-white transition-all">
-                    <span class="material-symbols-outlined text-primary">search</span>
-                    <span class="text-sm font-medium">Search Results</span>
-                </a>
-                <a href="../interactive_seat_selection_modal/index.html"
-                    class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 text-white/70 hover:text-white transition-all">
-                    <span class="material-symbols-outlined text-primary">chair_alt</span>
-                    <span class="text-sm font-medium">Seat Selection</span>
-                </a>
-                <a href="../passenger_details_page/index.html"
-                    class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 text-white/70 hover:text-white transition-all">
-                    <span class="material-symbols-outlined text-primary">person</span>
-                    <span class="text-sm font-medium">Passenger Details</span>
-                </a>
-                <a href="../payment_&_success_page/index.html"
-                    class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 text-white/70 hover:text-white transition-all">
-                    <span class="material-symbols-outlined text-primary">check_circle</span>
-                    <span class="text-sm font-medium">Payment & Success</span>
-                </a>
-                <a href="../user_journey_dashboard/index.html"
-                    class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 text-white/70 hover:text-white transition-all">
-                    <span class="material-symbols-outlined text-primary">dashboard</span>
-                    <span class="text-sm font-medium">User Dashboard</span>
-                </a>
             </div>
         </div>
-    </div>
-
+    </main>
+    <!-- Interactive Feedback Script -->
     <script>
-        const toggle = document.getElementById('nav-toggle');
-        const menu = document.getElementById('nav-menu');
-        let isOpen = false;
+        document.addEventListener('DOMContentLoaded', () => {
+            // Create Toast Container
+            const toastContainer = document.createElement('div');
+            toastContainer.id = 'toast-container';
+            toastContainer.style.cssText = 'position: fixed; bottom: 24px; right: 24px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; pointer-events: none;';
+            document.body.appendChild(toastContainer);
 
-        toggle.addEventListener('click', () => {
-            isOpen = !isOpen;
-            if (isOpen) {
-                menu.classList.remove('scale-0', 'opacity-0');
-                menu.classList.add('scale-100', 'opacity-100');
-            } else {
-                menu.classList.remove('scale-100', 'opacity-100');
-                menu.classList.add('scale-0', 'opacity-0');
-            }
-        });
+            // Toast Logic
+            window.showToast = (message, type = 'info') => {
+                const toast = document.createElement('div');
+                toast.style.cssText = `
+                    background: ${type === 'success' ? '#42f20d' : '#1e293b'};
+                    color: ${type === 'success' ? '#000' : '#fff'};
+                    padding: 12px 24px;
+                    border-radius: 99px;
+                    font-family: sans-serif;
+                    font-size: 14px;
+                    font-weight: 600;
+                    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+                    transform: translateY(100%);
+                    opacity: 0;
+                    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                    pointer-events: auto;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    border: 1px solid rgba(255,255,255,0.1);
+                `;
 
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!document.getElementById('project-nav').contains(e.target)) {
-                isOpen = false;
-                menu.classList.remove('scale-100', 'opacity-100');
-                menu.classList.add('scale-0', 'opacity-0');
-            }
+                const icon = type === 'success' ? 'check_circle' : 'info';
+                toast.innerHTML = `<span class="material-symbols-outlined" style="font-size: 18px;">${icon}</span> <span>${message}</span>`;
+
+                toastContainer.appendChild(toast);
+
+                // Animate In
+                requestAnimationFrame(() => {
+                    toast.style.transform = 'translateY(0)';
+                    toast.style.opacity = '1';
+                });
+
+                // Animate Out
+                setTimeout(() => {
+                    toast.style.transform = 'translateY(20px)';
+                    toast.style.opacity = '0';
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            };
+
+            // Global Event Listener
+            document.addEventListener('click', (e) => {
+                const target = e.target.closest('button, a, [role="button"]');
+                if (!target) return;
+
+                // Skip if it's the home button or valid navigation with an extension
+                const href = target.getAttribute('href');
+                if (href && (href.startsWith('..') || href.includes('.html'))) {
+                    return;
+                }
+
+                // Skip if explicitly just a hash or javascript void, otherwise allow default (likely just a placeholder)
+                if (href && !href.startsWith('#') && !href.startsWith('javascript')) {
+                    return;
+                }
+
+                // Initial animation click effect
+                target.style.transition = 'transform 0.1s';
+                target.style.transform = 'scale(0.95)';
+                setTimeout(() => target.style.transform = '', 150);
+
+                // Identify Action
+                let action = 'Action Triggered';
+                if (target.innerText && target.innerText.trim().length > 0) {
+                    action = target.innerText.trim();
+                } else if (target.getAttribute('aria-label')) {
+                    action = target.getAttribute('aria-label');
+                } else if (target.querySelector('.material-symbols-outlined')) {
+                    action = target.querySelector('.material-symbols-outlined').innerText || 'Icon Action';
+                }
+
+                // Clean up action text
+                action = action.substring(0, 25) + (action.length > 25 ? '...' : '');
+
+                // Show Feedback
+                e.preventDefault();
+                showToast(`${action}`, 'success');
+            });
         });
     </script>
-    <style>
-        :root {
-            --primary: #259df4;
-            --background-dark: #101a22;
-        }
-
-        #nav-menu {
-            pointer-events: none;
-        }
-
-        #nav-menu.scale-100 {
-            pointer-events: auto;
-        }
-    </style>
 </body>
 
 </html>
